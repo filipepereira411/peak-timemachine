@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peak Time Machine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #0a0a0c;
+            color: #00ff66;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Painel da Máquina do Tempo */
+        .time-machine-panel {
+            background: linear-gradient(145deg, #121216, #1a1a24);
+            border: 4px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 255, 102, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+
+        /* Secção do Visor */
+        .display-container {
+            background-color: #050505;
+            border: 2px solid #222;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .clock-display {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(0, 255, 102, 0.6);
+        }
+
+        .date-display {
+            font-size: 1.1rem;
+            color: #00b3ff;
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(0, 179, 255, 0.4);
+        }
+
+        /* Detalhes Estéticos */
+        .status-light {
+            width: 12px;
+            height: 12px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #00ff66;
+            animation: blink 1s infinite alternate;
+        }
+
+        .status-container {
+            font-size: 0.8rem;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes blink {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="time-machine-panel">
+        <h1>Peak Time Machine</h1>
+        
+        <div class="display-container">
+            <span class="label">Hora Local Sincronizada</span>
+            <div class="clock-display" id="clock">00:00:00</div>
+            <div class="date-display" id="date">00/00/0000</div>
+        </div>
+
+        <div class="status-container">
+            <span class="status-light"></span>
+            <span>MÁQUINA EM SINCRONIA ATIVA</span>
+        </div>
+    </div>
+
+    <script>
+        function updateTimeMachine() {
+            // Obtém os dados de tempo e data locais do dispositivo
+            const now = new Date();
+            
+            // Formata a hora para ter sempre dois dígitos (ex: 09:05:01)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            // Formata a data de acordo com o padrão local (DD/MM/AAAA)
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+            const year = now.getFullYear();
+
+            // Atualiza o conteúdo dos elementos HTML
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('date').textContent = `${day}/${month}/${year}`;
+        }
+
+        // Executa a função imediatamente para evitar o atraso de 1 segundo
+        updateTimeMachine();
+
+        // Atualiza a máquina do tempo a cada 1000 milissegundos (1 segundo)
+        setInterval(updateTimeMachine, 1000);
+    </script>
+
+</body>
+</html>
